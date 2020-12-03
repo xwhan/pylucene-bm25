@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 
-
 import sys, os, lucene, threading, time, csv, argparse
 from datetime import datetime
+from tqdm import tqdm
 
 from java.nio.file import Paths
 from org.apache.lucene.analysis.standard import StandardAnalyzer
@@ -61,14 +61,14 @@ class Indexer(object):
         # adding corpus
         with open(corpusPath) as tsvfile:
             reader = csv.reader(tsvfile, delimiter='\t')
-            for row in reader:
+            for row in tqdm(reader):
                 if row[0] != 'id':
                     doc_id, text, title = row[:3]
                     doc = Document()
                     doc.add(Field('Title', title, metaType))
+                    doc.add(Field('ID', str(doc_id), metaType))
                     doc.add(Field('Context', text, contextType))
                     writer.addDocument(doc)
-
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
@@ -76,12 +76,15 @@ if __name__ == '__main__':
     parser.add_argument('--index-path', type=str, help='file index save path')
     args = parser.parse_args()
 
-    lucene.initVM(vmargs=['-Djava.awt.headless=true'])
-    start = datetime.now()
-    try:
-        corpusIndex = Indexer(args.corpus_path, args.index_path)
-        end = datetime.now()
-        print(end - start)
-    except Exception as e:
-        print("Failed: ", e)
-        raise e
+    if os.path.exists(args.index_path):
+        print("Index already exists...")
+    else:
+        lucene.initVM(vmargs=['-Djava.awt.headless=true'])
+        start = datetime.now()
+        try:
+            corpusIndex = Indexer(args.corpus_path, args.index_path)
+            end = datetime.now()
+            print(end - start)
+        except Exception as e:
+            print("Failed: ", e)
+            raise e
