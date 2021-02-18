@@ -2,12 +2,11 @@
 
 Only tested for java-8-openjdk-amd64 
 
-In bash 
-
-export CLASSPATH=$CLASSPATH:data/corenlp/*:~/lucene/lucene-8.7.0/core/lucene-core-8.7.0.jar:~/lucene/lucene-8.7.0/queryparser/lucene-queryparser-8.7.0.jar:~/lucene/lucene-8.7.0/analysis/common/lucene-analyzers-common-8.7.0.jar:~/lucene/lucene-8.7.0/demo/lucene-demo-8.7.0.jar
-
+```bash
 export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+```
 
+https://lucene.apache.org/pylucene/install.html
 
 ## Construct the corpus index
 
