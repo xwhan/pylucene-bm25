@@ -1,12 +1,12 @@
-# Test the default pylucene for open-domain QA (Natural Questions)
+# Test the default pylucene bm25 for open-domain QA (Natural Questions)
 
 Only tested for java-8-openjdk-amd64 
 
-'''bash
+In bash 
+
 export CLASSPATH=$CLASSPATH:data/corenlp/*:~/lucene/lucene-8.7.0/core/lucene-core-8.7.0.jar:~/lucene/lucene-8.7.0/queryparser/lucene-queryparser-8.7.0.jar:~/lucene/lucene-8.7.0/analysis/common/lucene-analyzers-common-8.7.0.jar:~/lucene/lucene-8.7.0/demo/lucene-demo-8.7.0.jar
 
 export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
-'''
 
 
 ## Construct the corpus index
@@ -22,7 +22,8 @@ python retriever.py
 ```
 
 Answer Recall
-| Top20 | Top 50 | Top 100 |
-| ----------- | -------- | ------- |
-| 61.9 | 71.0 | 76.5 |
+| Method | Top20 | Top 50 | Top 100 |
+| ------- | ------ | -------- | ------- |
+| pylucene | 61.9 | 71.0 | 76.5 |
+| [DPR](https://arxiv.org/pdf/2004.04906.pdf) | 78.4 | - | 85.4 |
 
